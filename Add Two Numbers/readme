@@ -1,0 +1,1 @@
+注意要创建变量指向ListNode，新建一个ListNode链表时，每一个新元素都要new ListNode();
