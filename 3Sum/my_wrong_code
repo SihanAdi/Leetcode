@@ -1,0 +1,40 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> ans = new LinkedList<List<Integer>>();
+        if (nums.length < 3){
+            return ans;
+        }
+        
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++){
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+        for (int i = 0; i < nums.length; i++){
+            map.put(nums[i], map.getOrDefault(nums[i], 0) - 1);
+            
+            for (int j = i + 1; j < nums.length; j++){
+                map.put(nums[j], map.getOrDefault(nums[j], 0) - 1);
+                if (map.containsKey(0 - (nums[i] + nums[j])) && map.get(0 - (nums[i] + nums[j])) > 0){
+                    List<Integer> tmp = new LinkedList<Integer>();
+                    tmp.add(nums[i]);
+                    tmp.add(nums[j]);
+                    tmp.add(0 - (nums[i] + nums[j]));
+                    int t = 0;
+                    boolean ch = true;
+                    while (t < ans.size()){
+                        if (ans.get(t).contains(nums[i]) && ans.get(t).contains(nums[j]) && ans.get(t).contains(0 - (nums[i] + nums[j]))){
+                            ch = false;
+                            break;
+                        }
+                        t++;
+                    }
+                    if (ch){
+                        ans.add(tmp);
+                    }
+                }
+                map.put(nums[j], map.getOrDefault(nums[j], 0) + 1);
+            }
+        }
+        return ans;
+    }
+}
