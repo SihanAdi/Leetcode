@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head.next == null){
+            return null;
+        }
+        ListNode curr = head;
+        HashMap<Integer, ListNode> map = new HashMap<Integer, ListNode>();
+        int i = 0;
+        while (curr != null){
+            map.put(i, curr);
+            curr = curr.next;
+            i++;
+        }
+        int index = i - n;
+        if (index - 1 >= 0){
+            ListNode tmp = map.get(index - 1);
+            if (index + 1 <= i - 1){
+                curr = map.get(index + 1);
+                tmp.next = curr;
+            }else{
+                curr = map.get(i - 2);
+                curr.next = null;
+            } 
+        }else{
+            head = head.next;
+        }
+        
+        return head;
+    }
+}
