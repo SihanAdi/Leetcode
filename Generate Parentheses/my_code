@@ -1,0 +1,44 @@
+class Solution {
+    List<String> ans = new LinkedList<String>();
+    public List<String> generateParenthesis(int n) {
+        String str = "";
+        bt(n, 0, 0, str);
+        return ans;
+    }
+    public void bt(int n, int l, int r, String str){
+        //backtracking
+        if (l + r == 2 * n){
+            Stack<Character> stack = new Stack<>();
+            boolean ch = true;
+            for (int i = 0; i < str.length(); i++){
+                if (str.charAt(i) == ')'){
+                    if (stack.isEmpty() || stack.peek() != '('){
+                        ch = false;
+                        return;
+                    }
+                    else if (stack.peek() == '('){
+                        stack.pop();
+                    }
+                }
+                else if (str.charAt(i) == '('){
+                    stack.push(str.charAt(i));
+                }
+            }
+            if (ch == true && stack.isEmpty()){
+                ans.add(str);
+            }
+            return;
+        }
+        if (l > n || r > n){
+            return;
+        }
+        String tmpl = str;
+        int left = l + 1;
+        tmpl += "(";
+        bt(n, left, r, tmpl);
+        String tmpr = str;
+        int right = r + 1;
+        tmpr += ")";
+        bt(n, l, right, tmpr);
+    }
+}
