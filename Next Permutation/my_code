@@ -1,0 +1,39 @@
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int j = nums.length - 1;
+        int index = 0;
+        int max = Integer.MIN_VALUE;
+        int[] tmp = new int[nums.length];
+        Arrays.fill(tmp, -1);
+        while (j >= 0){
+            if (nums[j] > max){
+                max = nums[j];
+                
+            }
+            
+            if (nums[j] < max){
+                break;
+            }
+            tmp[j] = nums[j];
+            j--;
+        }
+        Arrays.sort(tmp);
+        if (j == -1){
+            Arrays.sort(nums);
+        }else{
+            for (int i = j + 1; i < tmp.length; i++){
+                if (tmp[i] > nums[j]){
+                    index = i;
+                    break;
+                }
+            }
+            tmp[j] = nums[j];
+            nums[j] = tmp[index];
+            tmp[index] = tmp[j];
+            for (int i = j + 1; i < tmp.length; i++){
+                nums[i] = tmp[i];
+            }
+        }
+        
+    }
+}
