@@ -1,0 +1,22 @@
+class Solution {
+    List<List<Integer>> ans = new LinkedList<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        int sum = 0;
+        bc (candidates, target, sum, 0, new LinkedList<Integer>());
+        return ans;
+    }
+    public void bc(int[] candidates, int target, int sum, int i, LinkedList<Integer> tmp){
+        if (sum == target){
+            ans.add(new LinkedList<Integer>(tmp));
+            return;
+        }
+        else if (sum > target){
+            return;
+        }
+        for (int j = i; j < candidates.length; j++){
+            tmp.add(candidates[j]);
+            bc (candidates, target, sum + candidates[j], j, tmp);
+            tmp.removeLast();
+        }
+    }
+}
