@@ -1,0 +1,36 @@
+class Solution {
+    List<List<Integer>> ans = new LinkedList<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        int sum = 0;
+        bc (candidates, target, sum, 0, new LinkedList<Integer>());
+        return ans;
+    }
+    public void bc(int[] condidates, int target, int sum, int i, LinkedList<Integer> tmp){
+        if (i >= condidates.length){
+            return;
+        }
+        sum += condidates[i];
+        tmp.addLast(condidates[i]);
+        if (sum == target){
+            LinkedList<Integer> tmp1 = (LinkedList<Integer>)tmp.clone();
+            ans.add(tmp1);
+            sum -= condidates[i];
+            tmp.removeLast();
+            i++;
+            bc (condidates, target, sum, i, tmp);
+        }
+        else if (sum > target){
+            
+            sum -= condidates[i];
+            tmp.removeLast();
+            i++;
+            bc (condidates, target, sum, i, tmp);
+            
+        }
+        else{
+            bc (condidates, target, sum, i, tmp);
+            sum -= condidates[i];
+            tmp.removeLast();
+        }
+    }
+}
