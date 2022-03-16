@@ -1,0 +1,33 @@
+class Solution {
+    public int trap(int[] height) {
+        int h = height[0];
+        int index = 0;
+        
+        int ans = 0;
+        for (int i = 1; i < height.length; i++){
+            if (height[i] >= h){
+                for (int j = index + 1; j <= i - 1; j++){
+                    ans = ans + h - height[j];
+                }
+                h = height[i];
+                index = i;
+            }
+        }
+        int t = index + 1;
+        while (t < height.length){
+            h = height[t];
+            index = t;
+            for (int i = t; i < height.length; i++){
+                if (height[i] >= h){
+                    for (int j = index + 1; j <= i - 1; j++){
+                        ans = ans + h - height[j];
+                    }
+                    h = height[i];
+                    index = i;
+                }
+            }
+            t++;
+        }
+        return ans;
+    }
+}
