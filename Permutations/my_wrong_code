@@ -1,0 +1,19 @@
+class Solution {
+    List<List<Integer>> ans = new LinkedList<List<Integer>>();
+    public List<List<Integer>> permute(int[] nums) {
+        
+        bc(nums, new LinkedList<Integer>(), 0);
+        return ans;
+    }
+    public void bc(int[] nums, LinkedList<Integer> tmp, int i){
+        if (tmp.size() == nums.length){
+            ans.add(new LinkedList<Integer>(tmp));
+            return;
+        }
+        for (int j = i; j < nums.length; j++){
+            tmp.add(nums[j]);
+            bc(nums, tmp, i + 1);
+            tmp.removeLast();
+        }
+    }
+}
