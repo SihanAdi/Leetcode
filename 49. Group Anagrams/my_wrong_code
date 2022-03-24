@@ -1,0 +1,51 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> ans = new LinkedList<List<String>>();
+        if (strs.length == 1){
+            List<String> tmp = new LinkedList<String>();
+            tmp.add(strs[0]);
+            ans.add(tmp);
+            return ans;
+        }
+        int[] visited = new int[strs.length];
+        Arrays.fill(visited, 0);
+        
+        for (int i = 0; i < strs.length; i++){
+            if (visited[i] == 0){
+                HashSet<Character> set = new HashSet<>();
+                List<String> tmp = new LinkedList<String>();
+                tmp.add(strs[i]);
+                if (strs[i].length() == 0){
+                    for (int t = i + 1; t < strs.length; t++){
+                        if (strs[t].length() == 0){
+                            tmp.add(strs[t]);
+                            visited[t] = 1;
+                        }
+                    }
+                    ans.add(tmp);
+                }
+                else
+                {for (int j = 0; j < strs[i].length(); j++){
+                    set.add(strs[i].charAt(j));
+                }
+                for (int t = i + 1; t < strs.length; t++){
+                    if (visited[t] == 0 && set.contains(strs[t].charAt(0)) && strs[i].length() == strs[t].length()){
+                        int k = 0;
+                        for (k = 0; k < strs[t].length(); k++){
+                            if (!set.contains(strs[t].charAt(k))){
+                                break;
+                            }
+                        }
+                        if (k == strs[t].length()){
+                            visited[t] = 1;
+                            
+                            tmp.add(strs[t]);
+                        }
+                    }
+                }
+                ans.add(tmp);}
+            }
+        }
+        return ans;
+    }
+}
