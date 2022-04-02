@@ -1,0 +1,62 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        boolean l = true;
+        boolean r = true;
+        if (root.left != null && root.left.val < root.val){
+            l = rcl(root.left, root);
+        }else if (root.left != null){
+            return false;
+        }
+        if (root.right != null && root.right.val > root.val){
+            r = rcr(root.right, root);
+        }else if (root.right != null){
+            return false;
+        }
+        return (l && r);
+    }
+    public boolean rcl (TreeNode root, TreeNode high){
+        boolean l = true;
+        boolean r = true;
+        if (root.left != null && root.left.val < root.val && root.left.val < high.val){
+            l = rcl(root.left, root);
+        }else if (root.left != null){
+            return false;
+        }
+        if (root.right != null && root.right.val > root.val && root.right.val < high.val){
+            r = rcl(root.right, root.right);
+        }else if (root.right != null){
+            return false;
+        }
+        return (l && r);
+    }
+    public boolean rcr (TreeNode root, TreeNode low){
+        boolean l = true;
+        boolean r = true;
+        if (root.left != null && root.left.val < root.val && root.left.val > low.val){
+            l = rcr(root.left, root.left);
+        }else if (root.left != null){
+            return false;
+        }
+        if (root.right != null && root.right.val > root.val && root.right.val > low.val){
+            r = rcr(root.right, root);
+        }else if (root.right != null){
+            return false;
+        }
+        return (l && r);
+    }
+}
