@@ -1,0 +1,36 @@
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        HashMap<String, List<String>> map = new HashMap<>();
+        int L = beginWord.length();
+        for (String str : wordList){
+            for (int i = 0; i < beginWord.length(); i++){
+                String word = str.substring(0, i) + "*" + str.substring(i + 1, L);
+                List<String> string = map.getOrDefault(word, new ArrayList<String>());
+                string.add(str);
+                map.put(word, string);
+            }
+        }
+        Queue<Pair<String, Integer>> queue = new LinkedList<>();
+        queue.add(new Pair(beginWord, 1));
+        HashMap<String, Boolean> visited = new HashMap<>();
+        visited.put(beginWord, true);
+        while (!queue.isEmpty()){
+            Pair<String, Integer> node = queue.remove();
+            String word = node.getKey();
+            int l = node.getValue();
+            for (int i = 0; i < L; i++){
+                String n = word.substring(0, i) + "*" + word.substring(i + 1, L);
+                for (String str : map.getOrDefault(n, new ArrayList<>())){
+                    if (str.equals(endWord)){
+                        return l + 1;
+                    }
+                    if (!visited.containsKey(str)){
+                        visited.put(str, true);
+                        queue.add(new Pair(str, l + 1));
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+}
