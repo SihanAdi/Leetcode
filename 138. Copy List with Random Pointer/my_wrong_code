@@ -1,0 +1,67 @@
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        Node ans = new Node(0);
+        Node tmppp = ans;
+        Node tmp = head;
+        HashSet<Node> set = new HashSet<>();
+        while (tmp != null){
+            if (!set.contains(tmp)){
+                Node tmpp = new Node(tmp.val);
+                set.add(tmp);
+                tmppp.next = tmpp;
+            }else{
+                Node node1 = ans;
+                while (node1 != null){
+                    if (node1.next != null && node1.next.val == tmp.val){
+                        
+                        node1 = node1.next;
+                        break;
+                    }
+                    if (node1.random != null && node1.random.val == tmp.val){
+                        
+                        node1 = node1.random;
+                        break;
+                    }
+                    node1 = node1.next;
+                }
+                tmppp.next = node1;
+            }
+            if (tmp.random != null){
+                if (!set.contains(tmp.random)){
+                    Node node = new Node(tmp.random.val);
+                    set.add(tmp.random);
+                    tmppp.next.random = node;
+                }else{
+                    Node node1 = ans.next;
+                    while (node1.val != tmp.val){
+                        node1 = node1.next;
+                    }
+                    tmppp.next.random = node1;
+                }
+            }else{
+                tmppp.next.random = null;
+            }
+            
+            
+            tmppp = tmppp.next;
+            tmp = tmp.next;
+        }
+       
+        return ans.next;
+    }
+}
