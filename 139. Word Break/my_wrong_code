@@ -1,0 +1,23 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int i = 0;
+        while (i < s.length()){
+            boolean target = false;
+            for (int j = 0; j < wordDict.size(); j++){
+                if (wordDict.get(j).charAt(0) == s.charAt(i) && wordDict.get(j).equals(s.substring(i, i + wordDict.get(j).length()))){
+                    i = i + wordDict.get(j).length();
+                    target = true;
+                    break;
+                }
+            }
+            if (target != true){
+                return false;
+            }
+        }
+        if (i >= s.length()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
