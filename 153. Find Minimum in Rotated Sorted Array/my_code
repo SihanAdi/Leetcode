@@ -1,0 +1,24 @@
+class Solution {
+    public int findMin(int[] nums) {
+        int n = nums.length - 1;
+        if (nums[0] < nums[n]){
+            return nums[0];
+        }else{
+            return bs(nums, 0, n);
+        }
+    }
+    public int bs(int[] nums, int i, int j){
+        if (i >= j){
+            return nums[j];
+        }
+        if (nums[i] < nums[j]){
+            return nums[i];
+        }
+        if (nums[(i + j) / 2] >= nums[i]){
+            return bs(nums, (i + j) / 2 + 1, j);
+        }else{
+            return bs(nums, i, (i + j) / 2);
+        }
+        
+    }
+}
